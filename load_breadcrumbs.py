@@ -13,7 +13,8 @@ DB_CONFIG = {
     'dbname': 'postgres',
     'user': 'postgres',
     'host': 'localhost',
-    'port': 5432
+   # 'port': 5432,
+    'password':'ps'
 }
 
 # ----------------------------- #
@@ -59,6 +60,7 @@ def load_json_files(json_dir):
     for filename in os.listdir(json_dir):
         if filename.endswith('.json'):
             with open(os.path.join(json_dir, filename)) as f:
+                print(f"Loading JSON file: {filename}")
                 content = json.load(f)
                 if isinstance(content, dict):
                     all_data.append(content)
@@ -77,7 +79,8 @@ def process_data(df):
         group['distance_diff'] = group['METERS'].diff()
         group['time_diff'] = group['ACT_TIME'].diff()
         group['speed'] = group['distance_diff'] / group['time_diff']
-        group['speed'].iloc[0] = group['speed'].iloc[1]
+        if len(group) > 1:
+            group.loc[group.index[0], 'speed'] = group['speed'].iloc[1]
         df.loc[group.index, 'speed'] = group['speed']
 
     trip_records = {}
@@ -153,4 +156,178 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
